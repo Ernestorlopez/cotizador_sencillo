@@ -15,7 +15,7 @@
     define('INCLUDES' , TEMPLATES.'includes'.DS);
     define('MODULES'  , TEMPLATES.'modules'.DS);
     define('VIEWS'    , TEMPLATES.'views'.DS);
-    define('UPLOADS'  ,ROOT.'uploads'.DS);
+    define('UPLOADS'  , ROOT.'uploads'.DS);
 
     //Constantes para URLs
     define('CSS'      , URL.'assets/css/');
