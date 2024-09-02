@@ -62,48 +62,8 @@
             <div class="col-lg-4 col-12">
                 <div class="card">
                     <div class="card-header">Resumen de cotización</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped table-borderer">
-                                <thead>
-                                    <tr>
-                                        <td>Concepto</td>
-                                        <td>Cantidad</td>
-                                        <td>Precio</td>
-                                        <td class="text-right">Subtotal</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Playera</td>
-                                        <td>1</td>
-                                        <td>$399,00</td>
-                                        <td class="text-right">$399,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Guitarra</td>
-                                        <td>2</td>
-                                        <td>$250,00</td>
-                                        <td class="text-right">$500,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-right" colspan="3">Subtotal</td>
-                                        <td class="text-right">$123,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-right" colspan="3">Impuestos</td>
-                                        <td class="text-right">$123,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-right" colspan="3">Envio</td>
-                                        <td class="text-right">$50,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-right" colspan="4"><b>Total</b><h3 class="text-success"><b>$799,00</b></h3></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="card-body wrapper_quote">
+                        
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-primary">Descargar PDF</button>

@@ -230,5 +230,27 @@
     return true;
    }
 
+   function get_module($view, $data = []){
+    $view = $view.'.php';
+    if(!is_file($view)){
+        return false;
+    }
+
+    $d = $data = json_decode(json_encode(($data))); //conversión a objeto
+
+    ob_start();
+    require_once $view;
+    $output = ob_get_clean();
+
+    return $output;
+   }
+
+   function hook_get_quote_res(){
+    //Vamos a cargar la cotización
+    $quote = get_quote();
+    $html  = get_module(MODULES.'quote_table', $quote);
+
+    json_output(json_build(200, ['quote' => $quote, 'html' => $html]));
+   }
    
 ?>
