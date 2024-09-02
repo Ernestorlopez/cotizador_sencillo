@@ -92,4 +92,143 @@
 
    }
 
+      function get_item($id){
+    $items = get_items();
+
+    //Si no hay items
+    if(empty($items)){
+        return false;
+    }
+
+    //Si hay items iteramos
+    foreach($items as $item){
+        //Validar si existe con el mismo id pasado
+        if($item['id'] === $id){
+            return $item;
+        }
+    }
+
+    //No hubo match o resultados
+    return false;
+   }
+
+   function delete_items(){
+    $_SESSION['new_quote']['items'] = [];
+
+    recalculate_quote();
+
+    return true;
+   }
+
+   function delete_item($id){
+    $items = get_items();
+
+    //Si no hay items
+    if(empty($items)){
+        return false;
+    }
+
+    //Si hay items iteramos
+    foreach($items as $i => $item){
+        //Validar si existe con el mismo id pasado
+        if($item['id'] === $id){
+            unset($_SESSION['new_quote']['items']['$i']);
+            return $item;
+        }
+    }
+
+    //No hubo match o resultados
+    return false;
+   }
+   
+   function add_item($item){
+    $items = get_items();
+
+    //Si existe el id ya en nuestros items
+    //podemos actualizar la información en lugar de agregarlo
+    if(get_item($item['id'])!== false) {
+        foreach ($items as $i => $e_item){
+            if($item['id'] === $e_item['id']){
+                $_SESSION['new_quote']['items'][$i] = $item;
+                return true;
+            }
+        }
+    }
+
+    //No existe en la lista, se agrega simplemente
+    $_SESSION['new_quote']['items'][] = $item;
+    return true;
+   }
+
+/* 
+    200 OK 
+    201 Created 
+    300 Multiple Choices 
+    301 Moved Permanently 
+    302 Found 
+    304 Not Modified 
+    307 Temporary Redirect 
+    400 Bad Request 
+    401 Unauthorized 
+    403 Forbidden 
+    404 Not Found 
+    410 Gone 
+    500 Internal Server Error 
+    501 Not Implemented 
+    503 Service Unavailable 
+    550 Permission denied 
+ */
+
+   function json_build($status = 200, $data = null, $msg = ''){
+    if(empty($msg) || $msg == ''){
+        switch ($status){
+            case 200:
+                $msg = 'OK';
+                break;
+            case 201:
+                $msg = 'Created';
+                break;
+            case 400:
+                $msg = 'Invalid Request';
+                break;
+            case 403:
+                $msg = 'Acces Denied';
+                break;
+            case 404:
+                $msg = 'Not Found';
+                break;
+            case 500:
+                $msg = 'Internal Server Error';
+                break;
+            case 550:
+                $msg = 'Permission denied';
+                break;
+            default:
+                break;
+        }
+    }
+    $json =
+    [
+        'status' => $status,
+        'data'   => $data,
+        'msg'    => $msg
+    ];
+
+    return json_encode($json);
+   }
+
+   function json_output($json){
+    header('Access-Control-Allow-Origin: *');
+    header('Content-type: application/json;charset=utf-8');
+
+    if(is_array($json)){
+        $json = json_encode($json);
+    }
+    
+    echo $json;
+
+    return true;
+   }
+
+   
 ?>
