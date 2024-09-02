@@ -24,6 +24,11 @@
     define('IMG'      , URL.'assets/img/');
     define('JS'       , URL.'assets/js/');
 
+    //Personalización
+    define('APP_NAME'  , 'Cotizador App');
+    define('TAXES_RATE', 16);
+    define('SHIPPING'  , 99.50);
+
     //Se incluyen las funciones
     require_once APP.'functions.php';
     
