@@ -68,7 +68,7 @@
         </div>
         <div class="col-lg-4 col-12">
             <div class="card">
-                <div class="card-header">Resumen de cotización</div>
+                <div class="card-header">Resumen de cotización <button class="btn btn-danger float-end restart_quote">Reiniciar</button></div>
                 <div class="card-body wrapper_quote">
 
                 </div>

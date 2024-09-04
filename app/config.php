@@ -26,7 +26,7 @@
 
     //Personalización
     define('APP_NAME'  , 'Cotizador App');
-    define('TAXES_RATE', 16);
+    define('TAXES_RATE', 21);
     define('SHIPPING'  , 99.50);
 
     //Se incluyen las funciones
