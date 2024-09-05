@@ -132,7 +132,7 @@
     foreach($items as $i => $item){
         //Validar si existe con el mismo id pasado
         if($item['id'] === $id){
-            unset($_SESSION['new_quote']['items']['$i']);
+            unset($_SESSION['new_quote']['items'][$i]);
             return $item;
         }
     }
@@ -296,6 +296,65 @@
         json_output(json_build(400, null, 'Hubo un problema al reiniciar la cotización.'));
     }
     json_output(json_build(200, get_quote(), 'La cotización se ha reiniciado con éxito.'));
+   }
+
+   //Eliminar elemento
+   function hook_delete_concept(){
+    if(!isset($_POST['id'])){
+        json_output(json_build(403, null, 'Parametros incompletos'));
+    }
+
+    if(!delete_item((int) $_POST['id'])){
+        json_output(json_build(400, null, 'Hubo un problema al borrar el concepto'));
+    }
+               
+    json_output(json_build(200, null, 'Concepto borrado con éxito'));
+    
+   }
+
+   //Editar elemento
+   function hook_edit_concept(){
+    if(!isset($_POST['id'])){
+        json_output(json_build(403, null, 'Parámetros incompletos.'));
+    }
+
+    if(!$item = get_item((int) $_POST['id'])) {
+        json_output(json_build(400, null, 'Hubo un problema al cargar el concepto.'));
+    }
+
+    json_output(json_build(200, $item, 'Concepto cargado con éxito.'));
+   }
+
+   //Guardar los cambios de un concepto
+   function hook_save_concept(){
+    //Validar
+    if(!isset($_POST['id_concepto'], $_POST['concepto'], $_POST['tipo'], $_POST['precio_unitario'], $_POST['cantidad'])){
+        json_output(json_build(403, null, 'Parámetros incompletos.'));
+    }
+
+    $id = (int) $_POST['id_concepto'];
+    $concept = trim($_POST['concepto']);
+    $type = trim ($_POST['tipo']);
+    $price = (float) str_replace([',','$'], '', $_POST['precio_unitario']);
+    $quantity = (int) trim($_POST['cantidad']);
+    $subtotal = (float) $price * $quantity;
+    $taxes = (float) $subtotal * (TAXES_RATE / 100);
+
+    $item =
+    [
+        'id' => $id,
+        'concept' => $concept, 
+        'type' => $type,
+        'quantity' => $quantity,
+        'price' => $price,
+        'taxes' => $taxes,
+        'total' => $subtotal
+    ];
+
+    if(!add_item($item)){
+        json_output(json_build(400, null, 'Hubo un problema al guardar los cambios en el concepto.'));
+    }
+    json_output(json_build(200, get_item($id), 'Cambios guardados con éxito.'));
    }
    
 ?>
