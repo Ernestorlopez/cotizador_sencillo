@@ -29,6 +29,9 @@
     define('TAXES_RATE', 21);
     define('SHIPPING'  , 99.50);
 
+    //Autoload Composer
+    require_once ROOT.'vendor/autoload.php';
+
     //Se incluyen las funciones
     require_once APP.'functions.php';
     
