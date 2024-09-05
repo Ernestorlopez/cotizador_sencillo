@@ -1,10 +1,10 @@
 $('document').ready(() => {
 
     function notify(content, type = 'success'){
-        let wrapper  = $('.wrapper_notifications');
-        id          = Math.floor(Math.random()* 500 + 1);
-        notificacion = '<div class="alert alert-'+type+'" id="noty_'+id+'">'+content+'</div>';
-        time         = 3000;
+        let wrapper  = $('.wrapper_notifications'),
+        id          = Math.floor(Math.random()* 500 + 1),
+        notificacion = '<div class="alert alert-'+type+'" id="noty_'+id+'">'+content+'</div>',
+        time         = 5000;
 
         //insertar en el contenedor la notificación
         wrapper.append(notificacion);
@@ -77,7 +77,7 @@ $('document').ready(() => {
 
         //Validar precios
         if(precio < 10){
-            notify('Por favor ingrese un precio mayor a $10', 'danger');
+            notify('Por favor ingrese un precio mayor a $10.', 'danger');
             errors++;
         }
 
