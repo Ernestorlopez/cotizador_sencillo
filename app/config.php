@@ -12,18 +12,18 @@
     define('DS'       , DIRECTORY_SEPARATOR);
     define('ROOT'     , getcwd().DS);
     define('APP'      , ROOT.'app'.DS);
-    define('ASSESTS'  , ROOT.'assets'.DS);
+    define('ASSETS'   , ROOT.'assets'.DS);
     define('TEMPLATES', ROOT.'templates'.DS);
     define('INCLUDES' , TEMPLATES.'includes'.DS);
     define('MODULES'  , TEMPLATES.'modules'.DS);
     define('VIEWS'    , TEMPLATES.'views'.DS);
-    define('UPLOADS'  , ROOT.'uploads'.DS);
+    define('UPLOADS'  , ASSETS.'uploads'.DS);
 
     //Constantes para URLs
     define('CSS'      , URL.'assets/css/');
     define('IMG'      , URL.'assets/img/');
     define('JS'       , URL.'assets/js/');
-
+    
     //Personalización
     define('APP_NAME'  , 'Cotizador App');
     define('TAXES_RATE', 21);

@@ -108,11 +108,11 @@
             <div class="card">
                 <div class="card-header">Resumen de cotización <button class="btn btn-danger float-end restart_quote">Reiniciar</button></div>
                 <div class="card-body wrapper_quote">
-
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary">Descargar PDF</button>
-                    <button class="btn btn-success">Enviar por correo</button>
+                    <button class="btn btn-success" id="generate_quote">Generar Cotización</button>
+                    <a class="btn btn-primary" id="download_quote" style="display: none;" href="">Descargar PDF</a>
+                    <button class="btn btn-success" id="send_quote" style="display: none;">Enviar por correo</button>
                 </div>
             </div>
         </div>

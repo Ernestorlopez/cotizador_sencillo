@@ -43,8 +43,8 @@ $("document").ready(() => {
     })
       .done((res) => {
         if (res.status === 200) {
-          nombre.val(res.data.quote.nombre);
-          empresa.val(res.data.quote.empresa);
+          nombre.val(res.data.quote.name);
+          empresa.val(res.data.quote.company);
           email.val(res.data.quote.email);
           wrapper.html(res.data.html);
         } else {
@@ -94,14 +94,14 @@ $("document").ready(() => {
     }
 
     $.ajax({
-      url        : "ajax.php",
-      type       : "POST",
-      dataType   : "json",
-      cache      : false,
+      url: "ajax.php",
+      type: "POST",
+      dataType: "json",
+      cache: false,
       processData: false,
       contentType: false,
-      data       : data,
-      beforeSend : () => {
+      data: data,
+      beforeSend: () => {
         form.waitMe();
       },
     })
@@ -241,11 +241,11 @@ $("document").ready(() => {
   function save_concept(e) {
     e.preventDefault();
 
-    let form                 = $("#save_concept"),
-    action                   = "save_concept",
-    data                     = new FormData(form.get(0)),
-    wrapper_update_concept    = $(".wrapper_update_concept"),
-    errors                   = 0;
+    let form = $("#save_concept"),
+      action = "save_concept",
+      data = new FormData(form.get(0)),
+      wrapper_update_concept = $(".wrapper_update_concept"),
+      errors = 0;
 
     //Agregar la acción al objeto data
     data.append("action", action);
@@ -270,44 +270,121 @@ $("document").ready(() => {
     }
 
     $.ajax({
-      url         : 'ajax.php',
-      type        : 'POST',
-      dataType    : 'json',
-      cache       : false,
-      processData : false,
-      contentType : false,
-      data        : data,
-      beforeSend  : () => {
+      url: "ajax.php",
+      type: "POST",
+      dataType: "json",
+      cache: false,
+      processData: false,
+      contentType: false,
+      data: data,
+      beforeSend: () => {
         form.waitMe();
-      }
-    }).done(res => {
-      if(res.status === 200){
-        form.trigger('reset');
-        wrapper_update_concept.fadeOut();
-        notify(res.msg);
-        get_quote();
-      } else {
-        notify(res.msg, 'danger');
-      }
-    }).fail(err => {
-      notify('Hubo un problema con la petición, intenta de nuevo.', 'danger');
-      wrapper_update_concept.fadeOut();
-      form.trigger('reset');
-    }).always(() => {
-      form.waitMe('hide');
+      },
     })
-
+      .done((res) => {
+        if (res.status === 200) {
+          form.trigger("reset");
+          wrapper_update_concept.fadeOut();
+          notify(res.msg);
+          get_quote();
+        } else {
+          notify(res.msg, "danger");
+        }
+      })
+      .fail((err) => {
+        notify("Hubo un problema con la petición, intenta de nuevo.", "danger");
+        wrapper_update_concept.fadeOut();
+        form.trigger("reset");
+      })
+      .always(() => {
+        form.waitMe("hide");
+      });
   }
 
   //Cancel edit
-  $('#cancel_edit').on('click', (e) => {
+  $("#cancel_edit").on("click", (e) => {
     e.preventDefault();
 
     let button = $(this),
-    wrapper    = $('.wrapper_update_concept'),
-    form       = $('#save_concept');
+      wrapper = $(".wrapper_update_concept"),
+      form = $("#save_concept");
 
     wrapper.fadeOut();
-    form.trigger('reset');
+    form.trigger("reset");
   });
+
+  //Función para generar cotización
+  $("#generate_quote").on("click", generate_quote);
+  function generate_quote(e) {
+    e.preventDefault;
+
+    let button = $(this),
+      default_text = button.html(), //Generar
+      new_text = "Volver a generar",
+      download = $("#download_quote"),
+      send = $("#send_quote"),
+      nombre = $("#nombre").val(),
+      empresa = $("#empresa").val(),
+      email = $("#email").val(),
+      action = "generate_quote",
+      errors = 0;
+
+    //Validando la acción
+    if (!confirm("¿Estás seguro?")) return false;
+
+    //Validando información
+    if (nombre.length < 5) {
+      notify("Ingresa un nombre para el cliente por favor", "danger");
+      errors++;
+    }
+
+    if (empresa.length < 5) {
+      notify("Ingresa un nombre para la empresa por favor", "danger");
+      errors++;
+    }
+
+    if (email.length < 5) {
+      notify("Ingresa un email válido por favor", "danger");
+      errors++;
+    }
+
+    if (errors > 0) {
+      return false;
+    }
+
+    //Petición
+    $.ajax({
+      url: "ajax.php",
+      type: "POST",
+      dataType: "json",
+      cache: false,
+      data: { action, nombre, empresa, email },
+      beforeSend: () => {
+        $("body").waitMe();
+        button.html("Generando...");
+      },
+    })
+      .done((res) => {
+        if (res.status === 200) {
+          notify(res.msg);
+          download.attr("href", res.data.url);
+          download.fadeIn();
+          send.fadeIn();
+          button.html(new_text);
+        } else {
+          notify(res.msg, "danger");
+          download.attr("href", "");
+          download.fadeOut();
+          send.fadeOut();
+          button.html("Reintentar");
+        }
+      })
+      .fail((err) => {
+        notify("Hubo un problema con la petición, intenta de nuevo.", "danger");
+        button.html(default_text);
+      })
+      .always(() => {
+        $("body").waitMe("hide");
+      });
+  }
 });
