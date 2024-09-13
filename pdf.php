@@ -1,15 +1,28 @@
 <?php
+
 require_once 'app/config.php';
 
-//Namespace
-use Dompdf\Dompdf;
+//Validar que existen cotizaciones y el paramettro $_GET number
+if (!isset($_GET['number'])) {
+    redirect('index.php?error=invalid_number');
+}
 
-$pdf = new Dompdf();
-$pdf -> loadHtml('<h1>Hola Mundo</h1>');
+//Si no hay cotizaciones
+$quotes = get_all_quotes();
+if (empty($quotes)) {
+    redirect('index.php?error=no_quotes');
+}
 
-$pdf->setPaper('A4');
+//Buscar el match del folio
+$number = trim($_GET['number']);
+$file = sprintf(UPLOADS.'coty_%s.pdf', $number);
 
-$pdf->render();
+if (!is_file($file)) {
+    //No existe cotización
+    redirect(sprintf('index.php?error=not_found'));
+}
 
-$pdf->stream(time().'.pdf');
-?>
+//Descarga
+header('Content-Type: application/pdf');
+header(sprintf('Content-Disposition: attachment;filename=%s', pathinfo($file, PATHINFO_BASENAME)));
+readfile($file);
