@@ -269,7 +269,14 @@
     $price         = (float) str_replace([',','$'], '', $_POST['precio_unitario']);
     $quantity      = (int) trim($_POST['cantidad']);
     $subtotal      = (float) $price * $quantity;
-    $taxes         = (float) $subtotal * (TAXES_RATE / 100);
+
+    if($type=105){
+        $impuestos = TAXES_RATE/2;
+    }else{
+        $impuestos = TAXES_RATE;
+    }
+
+    $taxes         = (float) $subtotal * ($impuestos / 100);
 
     $item          =
     [
