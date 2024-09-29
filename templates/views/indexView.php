@@ -40,10 +40,10 @@
                                 <input type="text" class="form-control" id="concepto" name="concepto" placeholder="Artículo" required>
                             </div>
                             <div class="col-3">
-                                <label for="tipo">Tipo de producto</label>
+                                <label for="tipo">Tipo de IVA</label>
                                 <select name="tipo" id="tipo" class="form-control">
-                                    <option value="producto">Producto</option>
-                                    <option value="servicio">Servicio</option>
+                                    <option value="105">10.5%</option>
+                                    <option value="21">21%</option>
                                 </select>
                             </div>
                             <div class="col-3">

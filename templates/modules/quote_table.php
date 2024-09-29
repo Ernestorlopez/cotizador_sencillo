@@ -26,7 +26,7 @@
                 </td>
                 <td class="text-right">
                     <?php echo $item->concept; ?>
-                    <small class="text-muted d-block"><?php echo $item->type === 'producto' ? 'Producto' : 'Servicio'; ?></small>
+                    <small class="text-muted d-block"><?php echo $item->type === '105' ? 'IVA del 10.5%' : 'IVA del 21%'; ?></small>
                 </td>
                 <td class="text-end"><?php echo '$'.number_format($item->price, 2); ?></td>
                 <td class="text-center"><?php echo $item->quantity; ?></td>
