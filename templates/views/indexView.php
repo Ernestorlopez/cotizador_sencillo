@@ -112,7 +112,7 @@
                 <div class="card-footer">
                     <button class="btn btn-success" id="generate_quote">Generar Cotización</button>
                     <a class="btn btn-primary" id="download_quote" style="display: none;" href="">Descargar PDF</a>
-                    <button class="btn btn-success" id="send_quote" style="display: none;">Enviar por correo</button>
+                    <button class="btn btn-info" id="send_quote" style="display: none;">Enviar por correo</button>
                 </div>
             </div>
         </div>

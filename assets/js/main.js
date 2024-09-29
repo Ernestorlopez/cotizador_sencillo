@@ -369,12 +369,14 @@ $("document").ready(() => {
           notify(res.msg);
           download.attr("href", res.data.url);
           download.fadeIn();
+          send.attr('data-number', res.data.number);
           send.fadeIn();
           button.html(new_text);
         } else {
           notify(res.msg, "danger");
           download.attr("href", "");
           download.fadeOut();
+          send.attr('data-number', '');
           send.fadeOut();
           button.html("Reintentar");
         }
@@ -386,5 +388,36 @@ $("document").ready(() => {
       .always(() => {
         $("body").waitMe("hide");
       });
+  }
+
+  //Función para enviar cotización
+  $('#send_quote').on('click', send_quote);
+  function send_quote(e){
+    e.preventDefault();
+
+    let button = $(this),
+    default_text = button.html(), //Enviar por correo
+    new_text = 'Volver a Enviar',
+    number = button.data('number'),
+    action = 'send_quote';
+
+    //Validando acción
+    if(!confirm('¿Estás seguro?')) return false;
+
+    if(number===''){
+      notify('El folio de cotización no es válido', 'danger');
+    }
+
+    //Petición
+    $.ajax({
+      url : 'ajax.php',
+      type : 'POST',
+      dataType : 'json',
+      cache : false,
+      beforeSend: () => {
+        $('body').waitMe();
+        button.html('Enviando...');
+      }
+    })
   }
 });
